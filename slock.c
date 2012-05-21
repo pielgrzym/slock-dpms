@@ -16,6 +16,7 @@
 #include <X11/keysym.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <X11/extensions/dpms.h>
 
 #if HAVE_BSD_AUTH
 #include <login_cap.h>
@@ -94,6 +95,10 @@ readpw(Display *dpy, const char *pws)
 	 * utility. This way the user can easily set a customized DPMS
 	 * timeout. */
 	while(running && !XNextEvent(dpy, &ev)) {
+		if(len == 0 && DPMSCapable(dpy)) {
+			DPMSEnable(dpy);
+			DPMSForceLevel(dpy, DPMSModeOff);
+		}
 		if(ev.type == KeyPress) {
 			buf[0] = 0;
 			num = XLookupString(&ev.xkey, buf, sizeof buf, &ksym, 0);

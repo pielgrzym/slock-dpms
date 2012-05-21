@@ -90,10 +90,10 @@ readpw(Display *dpy, const char *pws)
 	len = llen = 0;
 	running = True;
 
-	/* As "slock" stands for "Simple X display locker", the DPMS settings
-	 * had been removed and you can set it with "xset" or some other
-	 * utility. This way the user can easily set a customized DPMS
-	 * timeout. */
+	/* As "slock" doesn't stand for "Stoneage X screen locker", the DPMS settings
+	 * had been brought back so you can stop wasting your time to manage yet another
+	 * shell utility to lock your screen. Instead you can be productive - that is:
+	 * drink your bear and party hard. */
 	while(running && !XNextEvent(dpy, &ev)) {
 		if(len == 0 && DPMSCapable(dpy)) {
 			DPMSEnable(dpy);
